@@ -12,6 +12,13 @@ namespace Lib
     public class Silo
     {
         private readonly ManualResetEventSlim mre = new ManualResetEventSlim();
+        private readonly bool patient;
+
+        public Silo(bool patient)
+        {
+            this.patient = patient;
+        }
+
         public Task StopSilo()
         {
             mre.Set();
@@ -32,7 +39,10 @@ namespace Lib
                 .ConfigureServices(svc =>
                 {
                 });
-
+            if (patient)
+            {
+                builder.Configure<SiloMessagingOptions>(opts => opts.ResponseTimeout = TimeSpan.FromMinutes(10));
+            }
             using (var silo = builder.Build())
             {
                 await silo.StartAsync();

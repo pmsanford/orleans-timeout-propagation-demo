@@ -21,6 +21,14 @@ namespace Lib
                 .Configure<ClientMessagingOptions>(opts =>
                 {
                     opts.ResponseTimeout = TimeSpan.FromMilliseconds(timeInMs);
+                })
+                .Configure<SiloMessagingOptions>(opts =>
+                {
+                    opts.ResponseTimeout = TimeSpan.FromMilliseconds(timeInMs);
+                })
+                .Configure<MessagingOptions>(opts =>
+                {
+                    opts.ResponseTimeout = TimeSpan.FromMilliseconds(timeInMs);
                 });
             return builder.Build();
         }

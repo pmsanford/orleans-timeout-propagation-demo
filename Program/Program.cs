@@ -42,8 +42,13 @@ namespace Program
             }
             else
             {
+                var patient = false;
+                if (args.Length > 1)
+                {
+                    patient = args[1].Equals("patient", StringComparison.InvariantCultureIgnoreCase);
+                }
                 Console.WriteLine($"Preparing silo.");
-                var silo = new Silo();
+                var silo = new Silo(patient);
                 silo.StartSilo().Wait();
             }
         }
